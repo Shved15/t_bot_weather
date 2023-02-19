@@ -196,4 +196,4 @@ async def choice_state(callback: types.CallbackQuery, callback_data: dict):
 
 # directly launch the bot
 if __name__ == '__main__':
-    executor.start_polling(dp)
+    executor.start_polling(dp, skip_updates=True)
