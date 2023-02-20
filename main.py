@@ -105,70 +105,29 @@ async def get_weather(message: types.Message):
 @dp.callback_query_handler(keyb.cb.filter())
 async def choice_state(callback: types.CallbackQuery, callback_data: dict):
 
-    if callback_data['action'] == 'Temp':
+    cb_data_dict = {
+        'Temp': [f"Temperature in the city: <b>{arr[1]} C° {arr[2]}</b>", keyb.ikb_temperature()],
+        'Humi': [f"Humidity in the city: <b>{arr[3]}%</b>", keyb.ikb_humidity()],
+        'Pres': [f"Pressure in the city: <b>{arr[4]} mmHg</b>", keyb.ikb_pressure()],
+        'Wind': [f"Wind in the city: <b>{arr[5]} m/s</b>", keyb.ikb_wind()],
+        'Sunr': [f"Sunrise in the city: <b>{arr[6]}</b>", keyb.ikb_sunrise()],
+        'Suns': [f"Sunset in the city: <b>{arr[7]}</b>", keyb.ikb_sunset()],
+        'Leng': [f"Day length in the city: <b>{arr[8]} h</b>", keyb.ikb_length()]
+    }
+
+    cb_d = callback_data["action"]
+
+
+    if cb_d in cb_data_dict.keys():
         await callback.message.edit_text(
 
                 text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
                     f"Weather in the city: <b>{arr[0]}</b>\n\n"
-                    f"Temperature in the city: <b>{arr[1]} C° {arr[2]}</b>",
-                reply_markup=keyb.ikb_temperature()
+                    f"{cb_data_dict[cb_d][0]}",
+                reply_markup=cb_data_dict[cb_d][1]
                 )
 
-    elif callback_data['action'] == 'Humi':
-        await callback.message.edit_text(
-
-                text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
-                    f"Weather in the city: <b>{arr[0]}</b>\n\n"
-                    f"Humidity in the city: <b>{arr[3]}%</b>",
-                reply_markup=keyb.ikb_humidity()
-                )
-
-    elif callback_data['action'] == 'Pres':
-        await callback.message.edit_text(
-
-                text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
-                    f"Weather in the city: <b>{arr[0]}</b>\n\n"
-                    f"Pressure in the city: <b>{arr[4]} mmHg</b>",
-                reply_markup=keyb.ikb_pressure()
-                )
-
-    elif callback_data["action"] == 'Wind':
-        await callback.message.edit_text(
-
-                text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
-                    f"Weather in the city: <b>{arr[0]}</b>\n\n"
-                    f"Wind in the city: <b>{arr[5]} m/s</b>",
-                reply_markup=keyb.ikb_wind()
-                )
-
-    elif callback_data["action"] == 'Sunr':
-        await callback.message.edit_text(
-
-                text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
-                    f"Weather in the city: <b>{arr[0]}</b>\n\n"
-                    f"Sunrise in the city: <b>{arr[6]}</b>",
-                reply_markup=keyb.ikb_sunrise()
-                )
-
-    elif callback_data["action"] == 'Suns':
-        await callback.message.edit_text(
-
-                text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
-                    f"Weather in the city: <b>{arr[0]}</b>\n\n"
-                    f"Sunset in the city: <b>{arr[7]}</b>",
-                reply_markup=keyb.ikb_sunset()
-                )
-
-    elif callback_data["action"] == 'Leng':
-        await callback.message.edit_text(
-
-                text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
-                    f"Weather in the city: <b>{arr[0]}</b>\n\n"
-                    f"Day length in the city: <b>{arr[8]} h</b>",
-                reply_markup=keyb.ikb_wind()
-                )
-
-    elif callback_data["action"] == 'full':
+    elif cb_d == 'full':
         await callback.message.edit_text(
 
                 text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
@@ -185,13 +144,13 @@ async def choice_state(callback: types.CallbackQuery, callback_data: dict):
                 reply_markup=keyb.ikb_back()
                 )
 
-    elif callback_data["action"] == 'back':
+    else:
         await callback.message.edit_text(
 
                 text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
                     f"Weather in the city: <b>{arr[0]}</b>",
                 reply_markup=keyb.ikb_all()
-        )
+                s)
 
 
 # directly launch the bot
