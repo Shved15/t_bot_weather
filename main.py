@@ -150,7 +150,7 @@ async def choice_state(callback: types.CallbackQuery, callback_data: dict):
                 text=f"{datetime.datetime.now().strftime('Date:  %d-%m-%Y  |  Time:  %H:%M')}\n"
                     f"Weather in the city: <b>{arr[0]}</b>",
                 reply_markup=keyb.ikb_all()
-                s)
+                )
 
 
 # directly launch the bot
